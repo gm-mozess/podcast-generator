@@ -1,42 +1,92 @@
-# podcast-generator
-A GitHub action to generate a podcast feed from a YAML file. YAML is much easier to read and write than XML, and this action will convert your YAML file into a valid podcast feed.
-Usage
-## Turn on Github Pages
 
-In your repository, go to Settings > Pages and select the main branch as the source. This will create a link to your page and give all of the content in the main branch a URL. Note the URL for the next step.
-Create a YAML file
+# 🎧 Podcast Generator
 
-### Create a YAML file in your repository with the following format:
+A GitHub Action to generate a podcast RSS feed from a human-friendly YAML file. YAML is easier to read and write than XML, making podcast publishing simple and efficient.
 
-title: <Podcast Title>
-subtitle: <Podcast Subtitle>
-author: <Author Name>
-description: <Podcast Description>
-link: <GitHub Pages URL>
-image: <Artwork Location>
-language: <Podcast Language e.g. en-us>
-category: <Postcast Category e.g. Technology https://podcasters.apple.com/support/1691-apple-podcasts-categories>
-format: <format of files e.g. audio/mpeg>
+---
+
+## 📘 How to Use
+
+### 🔹 Step 1: Enable GitHub Pages
+
+To make your podcast feed publicly accessible:
+
+1. Go to your repository’s **Settings > Pages**.
+2. Under **Source**, choose the `main` branch.
+3. Save and note the generated GitHub Pages URL — you’ll use this in your feed YAML file.
+
+---
+
+### 🔹 Step 2: Create a YAML File
+
+Create a file named `feed.yaml` at the root of your repository with the following structure:
+
+```yaml
+title: My Podcast
+subtitle: Insightful tech talks
+author: Jane Doe
+description: A podcast exploring the latest in software, hardware, and tech culture.
+link: https://<your-username>.github.io/<your-repo>
+image: /images/artwork.jpg
+language: en-us
+category: Technology
+format: audio/mpeg
+
 item:
-  - title: <Podcast Episode Title>
-    description: <Podcast Episode Description>
-    published: <Date Published - e.g. Thu, 12 Jan 2023 18:00:00 GMT>
-    file: <Filename e.g. /audio/TFIT01.mp3>
-    duration: <duration e.g. 00:00:36>
-    length: <length e.g. 576,324 (Get Info on your files)>
-  ... Repeat for each episode
+  - title: Episode 1 - The Future of AI
+    description: A deep dive into generative AI and its applications.
+    published: Thu, 12 Jan 2023 18:00:00 GMT
+    file: /audio/episode1.mp3
+    duration: 00:10:25
+    length: 10485760
+  - title: Episode 2 - The Rise of Rust
+    description: Why Rust is taking over systems programming.
+    published: Thu, 19 Jan 2023 18:00:00 GMT
+    file: /audio/episode2.mp3
+    duration: 00:12:40
+    length: 12582912
+```
 
-### Sample Workflow
+💡 **Tip:** Use `stat` or your OS's file info panel to determine the file `length` in bytes.
 
-You're also going to need your own workflow file. Here's a sample:
+---
 
-name: Generate Feed
+### 🔹 Step 3: Add GitHub Actions Workflow
+
+Add the following workflow to `.github/workflows/generate-feed.yml`:
+
+```yaml
+name: Generate Podcast Feed
+
 on: [push]
+
 jobs:
   generate-feed:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Run Feed Generator
+
+      - name: Run Podcast Feed Generator
         uses: planetoftheweb/podcast-feed-generator@main
+```
+
+Each time you push changes to the repository, this workflow will automatically convert your `feed.yaml` into a valid `feed.xml` RSS podcast feed.
+
+---
+
+## 🌐 Accessing Your Feed
+
+After deployment, your podcast feed will be publicly available at:
+
+```
+https://<your-username>.github.io/<your-repo>/feed.xml
+```
+
+You can submit this URL to podcast platforms like Apple Podcasts, Spotify, and others.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — you're free to fork, adapt, and share it.
