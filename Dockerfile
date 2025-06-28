@@ -1,6 +1,6 @@
 FROM unbuntu:latest
 
-RUM agt-get update && apt-get install -y \
+RUN agt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
     git 
