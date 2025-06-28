@@ -3,7 +3,7 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y 
    
 
-RUN apt install python3.10 \
+RUN apt install python3 \
     python3-pip \
     git 
 
