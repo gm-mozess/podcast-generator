@@ -4,7 +4,8 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
-    git
+    git \
+    python3.12-venv
     
 
 # Create virtual environment and install packages
