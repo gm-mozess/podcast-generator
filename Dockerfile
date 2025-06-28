@@ -1,4 +1,4 @@
-FROM unbuntu:latest
+FROM ubuntu:latest
 
 RUN agt-get update && apt-get install -y \
     python3.10 \
